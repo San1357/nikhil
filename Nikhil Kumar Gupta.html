@@ -1,0 +1,431 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Nikhil Kumar Gupta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: split hero — name & pitch on left, a live "inference frame" with bounding boxes on right */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#14202e; --muted:#5a6878; --line:#d3dae2;
+  --accent:#e8a317; --accent-ink:#5c3c00; --frame:#1b2735; --frame-line:#2f4054;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f161e; --surface:#16202b; --ink:#e6ecf2; --muted:#93a1b0; --line:#263443;
+  --accent:#f2b438; --accent-ink:#1a1100; --frame:#0a1017; --frame-line:#223040; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161e; --surface:#16202b; --ink:#e6ecf2; --muted:#93a1b0; --line:#263443;
+  --accent:#f2b438; --accent-ink:#1a1100; --frame:#0a1017; --frame-line:#223040; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font-family:var(--f-mono);font-weight:500;font-size:14px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo b{display:inline-grid;place-items:center;width:30px;height:30px;border:2px solid var(--accent);font-family:var(--f-display);font-weight:800;font-size:13px}
+.links{display:flex;gap:clamp(12px,2.4vw,28px);list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
+.links a:hover,.links a.on{color:var(--ink)}
+.links a.on{box-shadow:inset 0 -2px 0 var(--accent)}
+@media (max-width:620px){.links li:not(:first-child):not(:last-child){display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(40px,8vw,96px)}
+.hero>*{min-width:0}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin:0 0 18px}
+.dot{width:8px;height:8px;border-radius:50%;background:#2fa86a;box-shadow:0 0 0 4px color-mix(in srgb,#2fa86a 22%,transparent)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,7.4vw,86px);line-height:.96;letter-spacing:-.025em;margin:0;text-wrap:balance}
+/* the bounding box around the surname */
+.bbox{position:relative;display:inline-block;padding:0 .08em;outline:3px solid var(--accent);outline-offset:4px;margin-top:.18em}
+.bbox::before{content:"person · 0.99";position:absolute;left:-7px;top:-1.55em;font-family:var(--f-mono);font-size:13px;font-weight:500;letter-spacing:0;background:var(--accent);color:var(--accent-ink);padding:2px 8px;line-height:1.4;white-space:nowrap}
+.role{font-family:var(--f-display);font-weight:500;font-size:clamp(19px,2.2vw,24px);margin:28px 0 0;color:var(--ink)}
+.role span{color:var(--muted)}
+.pitch{max-width:56ch;color:var(--muted);margin:14px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;font-weight:500;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);color:var(--ink);transition:transform .15s,background .15s}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,.copy:focus-visible,.links a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mail{margin-top:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.mail code{color:var(--ink);user-select:all}
+.copy{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--muted);padding:3px 9px;cursor:pointer}
+.copy:hover{color:var(--ink);border-color:var(--muted)}
+
+/* inference frame */
+.frame{background:var(--frame);border:1px solid var(--frame-line);color:#cfd9e3;font-family:var(--f-mono);font-size:12px}
+.frame-top,.frame-bot{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;flex-wrap:wrap}
+.frame-top{border-bottom:1px solid var(--frame-line)}
+.frame-bot{border-top:1px solid var(--frame-line);color:#8ea0b2}
+.rec{color:#ff6b5b}
+.frame svg{display:block;width:100%;height:auto}
+.scan{animation:scan 4.5s linear infinite}
+@keyframes scan{from{transform:translateY(0)}to{transform:translateY(300px)}}
+.blink{animation:blink 1.4s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.scan,.blink{animation:none}.btn{transition:none}}
+
+/* facts strip */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:clamp(40px,6vw,72px)}
+.fact{padding:22px 20px;border-left:1px solid var(--line);min-width:0}
+.fact:first-child{border-left:0;padding-left:0}
+.fact .n{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.4vw,36px);line-height:1.1;font-variant-numeric:tabular-nums}
+.fact .l{font-size:14px;color:var(--muted);margin-top:4px}
+@media (max-width:760px){.facts{grid-template-columns:1fr 1fr}.fact:nth-child(3){border-left:0;padding-left:0}.fact:nth-child(n+3){border-top:1px solid var(--line)}}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding:0;list-style:none}
+.stack li{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+
+/* shared section shell */
+.sec{padding-block:clamp(48px,7vw,88px);border-top:1px solid var(--line);scroll-margin-top:70px}
+.sec-head{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-bottom:36px}
+.sec-head>*{min-width:0}
+@media (max-width:760px){.sec-head{grid-template-columns:1fr;gap:8px}}
+.tag{font-family:var(--f-mono);font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding-top:10px}
+.tag::before{content:"[ ";color:var(--accent)}.tag::after{content:" ]";color:var(--accent)}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.4vw,48px);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:12px 0 0}
+
+/* about */
+.about{display:grid;grid-template-columns:220px 1fr 1fr;gap:24px}
+.about>*{min-width:0}
+.about p{margin:0 0 14px;max-width:62ch}
+.about h3{font-family:var(--f-mono);font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 12px}
+.skills{display:grid;gap:14px}
+.skills div{display:grid;grid-template-columns:110px 1fr;gap:12px;font-size:15px;border-bottom:1px dashed var(--line);padding-bottom:12px}
+.skills dt{font-weight:500}.skills dd{margin:0;color:var(--muted)}
+@media (max-width:900px){.about{grid-template-columns:1fr}.about .spacer{display:none}}
+
+/* experience */
+.roles{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.roles li{display:grid;grid-template-columns:220px 1fr;gap:24px;padding-block:22px;border-bottom:1px solid var(--line)}
+.roles li>*{min-width:0}
+.roles li:first-child{border-top:1px solid var(--line)}
+.roles .when{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.roles .when b{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:500;padding:1px 7px;margin-bottom:4px}
+.roles h3{font-family:var(--f-display);font-size:22px;font-weight:700;margin:0}
+.roles p{margin:4px 0 0;color:var(--muted);max-width:62ch}
+@media (max-width:760px){.roles li{grid-template-columns:1fr;gap:6px}}
+
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.filters button{font:500 13px var(--f-mono);padding:7px 14px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.proj{background:var(--surface);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0;position:relative}
+.proj:hover{border-color:var(--accent)}
+.proj .meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.proj .dom{color:var(--ink)}
+.proj h3{font-family:var(--f-display);font-size:22px;font-weight:700;line-height:1.15;margin:0}
+.proj p{margin:0;color:var(--muted);font-size:15px}
+.proj ul.pts{margin:0;padding-left:18px;font-size:15px;display:grid;gap:4px}
+.proj .tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding:12px 0 0;list-style:none;border-top:1px dashed var(--line)}
+.proj .tools li{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);padding:2px 8px;border:1px solid var(--line)}
+.also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:15px;color:var(--muted)}
+.also span{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border:1px dashed var(--muted);color:var(--ink)}
+
+/* research */
+.paper{display:grid;grid-template-columns:220px 1fr;gap:24px}
+.paper>*{min-width:0}
+.paper .card{border-left:3px solid var(--accent);padding:4px 0 4px 24px}
+.paper h3{font-family:var(--f-display);font-size:clamp(22px,2.6vw,28px);font-weight:700;line-height:1.2;margin:0 0 10px;text-wrap:balance}
+.paper .authors{margin:0;color:var(--muted)}
+.paper .authors b{color:var(--ink);font-weight:500}
+.paper .ref{font-family:var(--f-mono);font-size:13px;margin-top:14px;display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.paper a{color:var(--ink)}
+@media (max-width:760px){.paper{grid-template-columns:1fr}}
+
+/* education */
+.edu{display:grid;grid-template-columns:220px 1fr 1fr;gap:24px}
+.edu>*{min-width:0}
+.edu h3{font-family:var(--f-display);font-size:22px;margin:0 0 4px}
+.edu .muted{color:var(--muted);margin:0}
+.edu ul{margin:0;padding-left:18px;display:grid;gap:8px;max-width:60ch}
+.edu .lbl{font-family:var(--f-mono);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 12px}
+.score{font-family:var(--f-display);font-weight:700;font-size:32px;margin-top:10px;font-variant-numeric:tabular-nums}
+.score small{font-family:var(--f-mono);font-size:13px;font-weight:400;color:var(--muted)}
+@media (max-width:900px){.edu{grid-template-columns:1fr}.edu .spacer{display:none}}
+
+/* contact */
+.contact{background:var(--frame);color:#e6ecf2;padding:clamp(32px,6vw,64px);margin-block:clamp(48px,7vw,88px) 32px;scroll-margin-top:70px}
+.contact h2{color:#e6ecf2;max-width:16ch}
+.contact .lede{color:#93a1b0}
+.clist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px}
+.citem{border:1px solid var(--frame-line);padding:16px 18px;min-width:0}
+.citem .k{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#93a1b0}
+.citem .v{margin-top:6px;font-size:15px;overflow-wrap:anywhere}
+.citem a{color:#f2b438}
+.citem code{user-select:all;font-family:var(--f-mono)}
+.citem button{margin-top:8px;font:12px var(--f-mono);background:none;color:#cfd9e3;border:1px solid var(--frame-line);padding:3px 9px;cursor:pointer}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-block:20px 40px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+</style>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#home"><b>NG</b>nikhil.gupta</a>
+      <ul class="links">
+        <li><a class="on" href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="home">
+  <section class="hero">
+    <div>
+      <p class="eyebrow"><span class="dot"></span>Senior Data Scientist · Pune, India</p>
+      <h1>Nikhil Kumar<br><span class="bbox">Gupta</span></h1>
+      <p class="role">I build vision models that run <span>on the edge.</span></p>
+      <p class="pitch">7 years across machine learning, deep learning, computer vision and NLP. I design detection and segmentation models, then optimise them with TensorRT and OpenVINO for Nvidia Jetson and Intel hardware, for automotive, healthcare and traffic clients.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">View projects →</a>
+        <a class="btn" href="https://www.linkedin.com/in/nikkiani1991" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/nguptaHQ" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=fF9o3TEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+      </div>
+      <div class="mail">
+        <code id="email">nikkiani1991@gmail.com</code>
+        <button class="copy" id="copyBtn" type="button">Copy email</button>
+      </div>
+      <ul class="stack" aria-label="Core tools">
+        <li>PyTorch</li><li>TensorFlow</li><li>Keras</li><li>TensorRT</li><li>OpenVINO</li><li>OpenCV</li><li>Nvidia Jetson</li><li>Docker</li>
+      </ul>
+    </div>
+
+    <figure class="frame" aria-label="Illustration of a traffic camera frame with detected vehicles and lanes" style="margin:0">
+      <div class="frame-top"><span><span class="rec blink">●</span> CAM_04 · traffic feed</span><span>wrong-way: off</span></div>
+      <svg viewBox="0 0 480 300" role="img" aria-hidden="true">
+        <rect width="480" height="300" fill="#121c27"/>
+        <polygon points="200,60 280,60 470,300 10,300" fill="#1d2a38"/>
+        <!-- segmented lanes -->
+        <polygon points="200,60 226,60 165,300 10,300" fill="#3a7bd5" opacity=".16"/>
+        <polygon points="254,60 280,60 470,300 315,300" fill="#2fa86a" opacity=".14"/>
+        <g stroke="#cfd9e3" stroke-width="3" stroke-dasharray="14 12" opacity=".55">
+          <line x1="226" y1="60" x2="165" y2="300"/><line x1="254" y1="60" x2="315" y2="300"/>
+        </g>
+        <line x1="0" y1="60" x2="480" y2="60" stroke="#2f4054"/>
+        <!-- vehicles -->
+        <g fill="#4a5d72"><rect x="88" y="200" width="70" height="46" rx="6"/><rect x="214" y="118" width="44" height="30" rx="5"/><rect x="318" y="226" width="78" height="52" rx="6"/></g>
+        <!-- detections -->
+        <g fill="none" stroke="#f2b438" stroke-width="2"><rect x="82" y="194" width="82" height="58"/><rect x="209" y="113" width="54" height="40"/><rect x="312" y="220" width="90" height="64"/></g>
+        <g font-family="JetBrains Mono,monospace" font-size="11">
+          <rect x="82" y="178" width="92" height="16" fill="#f2b438"/><text x="87" y="190" fill="#1a1100">car 0.97 #12</text>
+          <rect x="209" y="97" width="86" height="16" fill="#f2b438"/><text x="214" y="109" fill="#1a1100">car 0.91 #07</text>
+          <rect x="312" y="204" width="98" height="16" fill="#f2b438"/><text x="317" y="216" fill="#1a1100">truck 0.95 #03</text>
+          <text x="20" y="84" fill="#7fb0f0">lane_1 · count 14</text>
+          <text x="340" y="84" fill="#6fd19c">lane_2 · count 9</text>
+        </g>
+        <!-- tracking trail -->
+        <path d="M123 196 C130 170 140 150 150 128" stroke="#f2b438" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity=".7"/>
+        <rect class="scan" x="0" y="0" width="480" height="2" fill="#f2b438" opacity=".22"/>
+      </svg>
+      <figcaption class="frame-bot"><span>YOLOv3 · Kalman tracker · VGG-SegNet</span><span>TensorRT on Jetson</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="facts" aria-label="Highlights">
+    <div class="fact"><div class="n">7 yrs</div><div class="l">ML, DL, vision &amp; NLP</div></div>
+    <div class="fact"><div class="n">9</div><div class="l">client projects shipped</div></div>
+    <div class="fact"><div class="n">arXiv '19</div><div class="l">paper on DNN robustness</div></div>
+    <div class="fact"><div class="n">IIT Mandi</div><div class="l">B.Tech, Computer Science</div></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec" id="about">
+    <div class="sec-head"><div class="tag">About</div><div><h2>From the model notebook to the camera on the pole.</h2></div></div>
+    <div class="about">
+      <div class="spacer"></div>
+      <div>
+        <p>I'm a Senior Data Scientist at QuEST Global in Pune. Most of my work starts with a camera feed or a sensor signal and ends with a model running in real time on an Nvidia Jetson or Intel device.</p>
+        <p>I've built object detection, tracking and semantic segmentation systems for automotive and traffic clients, ECG arrhythmia detection for a European healthcare OEM, demand forecasting for a cafe chain, and search and topic modelling for Elsevier.</p>
+        <p>I like taking a state-of-the-art model, adapting it to a specific use case, and squeezing it until it's fast enough for the edge. I learn new tools by building with them.</p>
+      </div>
+      <div>
+        <h3>Toolkit</h3>
+        <dl class="skills">
+          <div><dt>Deep learning</dt><dd>PyTorch, TensorFlow, Keras, Scikit-learn</dd></div>
+          <div><dt>Vision</dt><dd>YOLOv3, SegNet, U-Net, OpenCV, optical flow, Kalman tracking</dd></div>
+          <div><dt>Edge</dt><dd>TensorRT, OpenVINO, Nvidia Jetson, Docker</dd></div>
+          <div><dt>NLP &amp; search</dt><dd>Gensim, spaCy, Word2Vec, LDA, Solr, Lucene</dd></div>
+          <div><dt>Cloud</dt><dd>Amazon SageMaker, S3, Azure Blob Storage</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="sec" id="experience">
+    <div class="sec-head"><div class="tag">Experience</div><div><h2>Where I've worked</h2><p class="lede">7 years across product labs and services, mostly on applied vision and deep learning.</p></div></div>
+    <ol class="roles">
+      <li><div class="when"><b>Current</b><br>Pune</div><div><h3>Senior Data Scientist · QuEST Global</h3><p>AI-powered image and video analytics, with models optimised and deployed on edge devices.</p></div></li>
+      <li><div class="when">Pune</div><div><h3>Senior Deep Learning Engineer · Mobiliya Labs</h3><p>Detection, segmentation and traffic analytics pipelines deployed on Nvidia Jetson with TensorRT.</p></div></li>
+      <li><div class="when">Pune</div><div><h3>Data Scientist · Infosys Labs</h3><p>Machine learning and NLP work, including search and author topic modelling for Elsevier.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="sec" id="projects">
+    <div class="sec-head"><div class="tag">Projects</div><div><h2>Selected client work</h2><p class="lede">Client names are kept anonymous where the work is under NDA.</p></div></div>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="edge" aria-pressed="false">Vision &amp; edge</button>
+      <button type="button" data-f="health" aria-pressed="false">Healthcare</button>
+      <button type="button" data-f="forecast" aria-pressed="false">Forecasting</button>
+      <button type="button" data-f="nlp" aria-pressed="false">NLP &amp; search</button>
+    </div>
+    <div class="grid" id="projGrid">
+      <article class="proj" data-c="edge">
+        <div class="meta"><span class="dom">Vision &amp; edge</span><span>Leading ADAS provider</span></div>
+        <h3>Wrong Way Detection on the edge</h3>
+        <p>Spots vehicles driving against the lane's traffic direction from a traffic camera, and uploads a snapshot of each event to Azure.</p>
+        <ul class="pts"><li>Trained a mini YOLOv3 for vehicle detection</li><li>Kalman tracker plus optical flow to compare actual vs expected flow</li><li>End-to-end deployment on Nvidia Jetson</li></ul>
+        <ul class="tools"><li>Darknet</li><li>TensorRT</li><li>OpenCV</li><li>Docker</li><li>Azure Blob</li></ul>
+      </article>
+      <article class="proj" data-c="edge">
+        <div class="meta"><span class="dom">Vision &amp; edge</span><span>Leading ADAS provider</span></div>
+        <h3>Lane-wise traffic analysis</h3>
+        <p>Detects lanes, counts vehicles in each lane and estimates congestion in real time for traffic monitoring.</p>
+        <ul class="pts"><li>VGG-SegNet for pixel-wise lane segmentation, OpenCV to fit lane lines</li><li>Modified YOLOv3 trained on vehicle images</li><li>Both graphs merged into a TensorRT inference graph on Jetson</li></ul>
+        <ul class="tools"><li>Keras</li><li>TensorFlow</li><li>TensorRT</li><li>OpenCV</li></ul>
+      </article>
+      <article class="proj" data-c="edge">
+        <div class="meta"><span class="dom">Vision &amp; edge</span><span>Leading automotive OEM</span></div>
+        <h3>Road marking segmentation</h3>
+        <p>Pixel-wise segmentation of road markings, used as a component for autonomous driving and city mapping.</p>
+        <ul class="pts"><li>VGG-SegNet and VGG-U-Net with pre-trained VGG16 encoders for faster convergence</li><li>Crop and flip augmentation, evaluated on pixel accuracy and IoU</li><li>Frozen to TensorRT and deployed on Jetson</li></ul>
+        <ul class="tools"><li>Keras</li><li>TensorRT</li><li>Jetson</li><li>Docker</li></ul>
+      </article>
+      <article class="proj" data-c="edge">
+        <div class="meta"><span class="dom">Vision &amp; edge</span><span>Leading US telecom operator</span></div>
+        <h3>Smart parking space detection</h3>
+        <p>Finds free and occupied spots from a parking-lot camera so incoming cars can be directed to a free space.</p>
+        <ul class="pts"><li>Object detection to box each parked car</li><li>Box coordinates mapped to parking slots</li><li>TensorFlow model converted to TensorRT for Jetson</li></ul>
+        <ul class="tools"><li>TensorFlow</li><li>TensorRT</li><li>OpenCV</li></ul>
+      </article>
+      <article class="proj" data-c="health">
+        <div class="meta"><span class="dom">Healthcare</span><span>Leading European healthcare OEM</span></div>
+        <h3>ECG arrhythmia detection &amp; severity</h3>
+        <p>Classifies ECG signals as normal or arrhythmic, then scores severity by how far a signal deviates from a normal heartbeat.</p>
+        <ul class="pts"><li>1D CNN with residual blocks for classification</li><li>Variational autoencoder trained only on normal ECGs</li><li>Higher reconstruction deviation means higher severity</li></ul>
+        <ul class="tools"><li>TensorFlow</li><li>1D CNN</li><li>VAE</li><li>OpenVINO</li></ul>
+      </article>
+      <article class="proj" data-c="forecast">
+        <div class="meta"><span class="dom">Forecasting</span><span>Cafe chain</span></div>
+        <h3>Sales forecasting to cut wastage</h3>
+        <p>Predicts next-day sales of menu items from 2 years of sales, stock and wastage data, so managers order the right amount from the kitchen.</p>
+        <ul class="pts"><li>Aggregated raw records into daily time series</li><li>DeepAR (RNN-based) on Amazon SageMaker</li><li>Holidays and temperature as exogenous features</li></ul>
+        <ul class="tools"><li>SageMaker</li><li>DeepAR</li><li>Pandas</li><li>S3</li></ul>
+      </article>
+      <article class="proj" data-c="nlp">
+        <div class="meta"><span class="dom">NLP &amp; search</span><span>Elsevier, Netherlands</span></div>
+        <h3>Scientific literature search engine</h3>
+        <p>A scalable search engine to help researchers find relevant journals and books.</p>
+        <ul class="pts"><li>Indexing schema for journals and scientific books</li><li>Auto-suggest and result highlighting</li><li>Filters, reset and pagination</li></ul>
+        <ul class="tools"><li>Solr</li><li>Lucene</li><li>Python</li></ul>
+      </article>
+      <article class="proj" data-c="nlp">
+        <div class="meta"><span class="dom">NLP &amp; search</span><span>Elsevier, Netherlands</span></div>
+        <h3>Author topic modelling</h3>
+        <p>Given a researcher's name, returns the topics they publish on, and given a topic, returns the researchers in that field.</p>
+        <ul class="pts"><li>Author-topic model built on LDA</li><li>Trained and tested on research paper corpora</li><li>Plugged into the search engine's author queries</li></ul>
+        <ul class="tools"><li>Gensim</li><li>spaCy</li><li>Word2Vec</li><li>LDA</li></ul>
+      </article>
+    </div>
+    <div class="also">Also worked on: <span>Traffic sign classification</span><span>Aeroplane door scratch detection</span></div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="sec" id="research">
+    <div class="sec-head"><div class="tag">Research</div><div><h2>Publication</h2></div></div>
+    <div class="paper">
+      <div class="tag" style="padding-top:4px">arXiv · 2019</div>
+      <div class="card">
+        <h3>Enforcing linearity in DNN succours robustness and adversarial image generation</h3>
+        <p class="authors">Anindya Sarkar, <b>Nikhil Kumar Gupta</b>, Raghu Iyengar</p>
+        <p class="authors" style="margin-top:8px">Cited by researchers at Intel and Technion – Israel Institute of Technology.</p>
+        <div class="ref"><span>arXiv:1910.08108</span><a href="https://arxiv.org/abs/1910.08108" target="_blank" rel="noopener">Read on arXiv →</a><a href="https://scholar.google.com/citations?user=fF9o3TEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar profile →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="sec" id="education">
+    <div class="sec-head"><div class="tag">Education</div><div><h2>Education &amp; awards</h2></div></div>
+    <div class="edu">
+      <div class="spacer"></div>
+      <div>
+        <p class="lbl">Degree</p>
+        <h3>B.Tech, Computer Science &amp; Engineering</h3>
+        <p class="muted">Indian Institute of Technology (IIT) Mandi · 2009–2013</p>
+        <div class="score">7.18 <small>CGPA / 10</small></div>
+      </div>
+      <div>
+        <p class="lbl">Recognition</p>
+        <ul>
+          <li>Merit scholarship for the full 2009–2013 programme</li>
+          <li>IIT-JEE 2009: All India Rank 7240 among ~4 lakh candidates</li>
+          <li>AIEEE 2009: All India Rank 5247 among ~9 lakh candidates</li>
+          <li>Represented IIT Mandi in basketball at the 47th Inter-IIT Sports Meet</li>
+          <li>Organised campus blood donation camps, 2010–11</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Have a vision problem that needs to run in real time?</h2>
+    <p class="lede">Open to roles and collaborations in computer vision, edge AI and applied deep learning.</p>
+    <div class="clist">
+      <div class="citem"><div class="k">Email</div><div class="v"><code id="email2">nikkiani1991@gmail.com</code></div><button type="button" id="copy2">Copy email</button></div>
+      <div class="citem"><div class="k">LinkedIn</div><div class="v"><a href="https://www.linkedin.com/in/nikkiani1991" target="_blank" rel="noopener">in/nikkiani1991</a></div></div>
+      <div class="citem"><div class="k">Google Scholar</div><div class="v"><a href="https://scholar.google.com/citations?user=fF9o3TEAAAAJ&amp;hl=en" target="_blank" rel="noopener">View publications</a></div></div>
+      <div class="citem"><div class="k">GitHub</div><div class="v"><a href="https://github.com/nguptaHQ" target="_blank" rel="noopener">nguptaHQ</a></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap"><span>© Nikhil Kumar Gupta</span><span>Pune, India</span></footer>
+
+<script>
+function wireCopy(btnId,srcId){
+  var b=document.getElementById(btnId),src=document.getElementById(srcId);
+  b.addEventListener('click',function(){
+    function sel(){var r=document.createRange();r.selectNodeContents(src);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press Ctrl+C';}
+    try{navigator.clipboard.writeText(src.textContent).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy email'},1600)},sel)}catch(e){sel()}
+  });
+}
+wireCopy('copyBtn','email');wireCopy('copy2','email2');
+
+/* project filters */
+var fb=document.querySelectorAll('.filters button');
+fb.forEach(function(btn){btn.addEventListener('click',function(){
+  var f=btn.dataset.f;
+  fb.forEach(function(x){x.setAttribute('aria-pressed',x===btn?'true':'false')});
+  document.querySelectorAll('#projGrid .proj').forEach(function(p){p.hidden=!(f==='all'||p.dataset.c===f)});
+})});
+
+/* highlight current section in nav */
+var navLinks=document.querySelectorAll('.links a');
+var ids=['home','about','experience','projects','research','contact'];
+function onScroll(){
+  var cur='home';
+  ids.forEach(function(id){var el=document.getElementById(id);if(el&&el!==document.getElementById('home')&&el.getBoundingClientRect().top<120)cur=id;});
+  if(document.getElementById('education').getBoundingClientRect().top<120&&document.getElementById('contact').getBoundingClientRect().top>=120)cur='research';
+  navLinks.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+</script>
+
+</body></html>
